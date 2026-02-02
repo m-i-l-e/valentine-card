@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd6e8 0%, #ffb3d9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 80px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            position: relative;
+        }
+
+        .dino-container {
+            width: 200px;
+            height: 180px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .heart-bow {
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            font-size: 35px;
+            animation: heartbeat 1.5s infinite;
+            z-index: 10;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+            min-height: 60px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff1744 100%);
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-no:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-no.moving {
+            position: absolute;
+        }
+
+        .note {
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .result {
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .celebration {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+
+        .celebration-gif {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .celebration-gif iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Confetti styles */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            animation: confetti-fall linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hearts-float {
+            position: fixed;
+            font-size: 30px;
+            animation: float-up 4s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="question-content">
+            <div class="dino-container">
+                <div class="heart-bow">💗</div>
+                <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Define gradients for more realistic coloring -->
+                    <defs>
+                        <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#7A9D5C;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#5A7A3A;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="bellyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#E5C29F;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#C4A574;stop-opacity:1" />
+                        </linearGradient>
+                        <radialGradient id="eyeGrad">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    
+                    <!-- Shadow under dinosaur -->
+                    <ellipse cx="100" cy="165" rx="70" ry="8" fill="#000" opacity="0.15" />
+                    
+                    <!-- Back powerful leg -->
+                    <ellipse cx="125" cy="115" rx="16" ry="32" fill="url(#bodyGrad)" transform="rotate(8 125 115)" />
+                    <ellipse cx="128" cy="115" rx="8" ry="28" fill="#6B8E4E" transform="rotate(8 128 115)" />
+                    <!-- Back thigh muscle definition -->
+                    <ellipse cx="123" cy="108" rx="6" ry="12" fill="#5A7A3A" opacity="0.3" transform="rotate(8 123 108)" />
+                    <!-- Back lower leg -->
+                    <rect x="120" y="140" width="12" height="26" rx="6" fill="#8B6F47" />
+                    <rect x="121" y="140" width="5" height="26" rx="3" fill="#A38B6F" />
+                    <!-- Back foot -->
+                    <ellipse cx="126" cy="163" rx="14" ry="5" fill="#5A4A3A" />
+                    <!-- Back foot claws -->
+                    <polygon points="116,162 113,168 117,165" fill="#3A2A1A" />
+                    <polygon points="126,163 125,169 128,166" fill="#3A2A1A" />
+                    <polygon points="136,162 135,168 138,165" fill="#3A2A1A" />
+                    <line x1="117" y1="165" x2="116" y2="168" stroke="#2A1A0A" stroke-width="1" />
+                    <line x1="128" y1="166" x2="127" y2="169" stroke="#2A1A0A" stroke-width="1" />
+                    <line x1="138" y1="165" x2="137" y2="168" stroke="#2A1A0A" stroke-width="1" />
+                    
+                    <!-- Main body - muscular and rounded -->
+                    <ellipse cx="100" cy="95" rx="42" ry="36" fill="url(#bodyGrad)" transform="rotate(-5 100 95)" />
+                    <!-- Belly detail -->
+                    <ellipse cx="98" cy="100" rx="24" ry="18" fill="url(#bellyGrad)" transform="rotate(-5 98 100)" />
+                    <!-- Body highlights for dimension -->
+                    <ellipse cx="85" cy="85" rx="15" ry="12" fill="#8FAD6C" opacity="0.4" transform="rotate(-5 85 85)" />
+                    
+                    <!-- Front powerful leg -->
+                    <ellipse cx="85" cy="110" rx="15" ry="34" fill="url(#bodyGrad)" transform="rotate(-5 85 110)" />
+                    <ellipse cx="87" cy="110" rx="7" ry="30" fill="#6B8E4E" transform="rotate(-5 87 110)" />
+                    <!-- Front thigh muscle -->
+                    <ellipse cx="83" cy="103" rx="6" ry="13" fill="#5A7A3A" opacity="0.3" transform="rotate(-5 83 103)" />
+                    <!-- Front lower leg -->
+                    <rect x="81" y="137" width="11" height="28" rx="5" fill="#8B6F47" />
+                    <rect x="82" y="137" width="5" height="28" rx="3" fill="#A38B6F" />
+                    <!-- Front foot -->
+                    <ellipse cx="86" cy="163" rx="13" ry="5" fill="#5A4A3A" />
+                    <!-- Front foot claws -->
+                    <polygon points="76,162 74,168 78,165" fill="#3A2A1A" />
+                    <polygon points="86,163 85,169 88,166" fill="#3A2A1A" />
+                    <polygon points="96,162 95,168 98,165" fill="#3A2A1A" />
+                    <line x1="78" y1="165" x2="77" y2="168" stroke="#2A1A0A" stroke-width="1" />
+                    <line x1="88" y1="166" x2="87" y2="169" stroke="#2A1A0A" stroke-width="1" />
+                    <line x1="98" y1="165" x2="97" y2="168" stroke="#2A1A0A" stroke-width="1" />
+                    
+                    <!-- Thick powerful tail with texture -->
+                    <path d="M 135 100 Q 155 103 170 98 Q 185 92 195 82" 
+                          stroke="url(#bodyGrad)" stroke-width="26" fill="none" stroke-linecap="round" />
+                    <path d="M 135 100 Q 155 103 170 98 Q 185 92 195 82" 
+                          stroke="#6B8E4E" stroke-width="20" fill="none" stroke-linecap="round" />
+                    <!-- Tail texture details -->
+                    <ellipse cx="150" cy="102" rx="4" ry="3" fill="#5A7A3A" opacity="0.4" />
+                    <ellipse cx="162" cy="99" rx="4" ry="3" fill="#5A7A3A" opacity="0.4" />
+                    <ellipse cx="173" cy="94" rx="3" ry="2" fill="#5A7A3A" opacity="0.4" />
+                    <ellipse cx="183" cy="88" rx="3" ry="2" fill="#5A7A3A" opacity="0.4" />
+                    <ellipse cx="190" cy="84" rx="2" ry="2" fill="#5A7A3A" opacity="0.4" />
+                    
+                    <!-- Neck - thick and muscular -->
+                    <path d="M 75 88 Q 58 75 48 58" 
+                          stroke="url(#bodyGrad)" stroke-width="24" fill="none" stroke-linecap="round" />
+                    <path d="M 75 88 Q 58 75 48 58" 
+                          stroke="#6B8E4E" stroke-width="18" fill="none" stroke-linecap="round" />
+                    
+                    <!-- Large T-Rex head -->
+                    <ellipse cx="38" cy="45" rx="24" ry="20" fill="url(#bodyGrad)" transform="rotate(-10 38 45)" />
+                    <ellipse cx="38" cy="46" rx="20" ry="17" fill="#6B8E4E" transform="rotate(-10 38 46)" />
+                    <!-- Head highlight -->
+                    <ellipse cx="35" cy="40" rx="10" ry="8" fill="#8FAD6C" opacity="0.3" transform="rotate(-10 35 40)" />
+                    
+                    <!-- Powerful jaw and snout -->
+                    <ellipse cx="22" cy="50" rx="17" ry="13" fill="url(#bodyGrad)" transform="rotate(-5 22 50)" />
+                    <ellipse cx="22" cy="50" rx="14" ry="10" fill="#7A9D5C" transform="rotate(-5 22 50)" />
+                    
+                    <!-- Mouth - wide and fierce -->
+                    <path d="M 12 47 Q 8 51 12 55" stroke="#1A0A00" stroke-width="2" fill="none" />
+                    <ellipse cx="16" cy="51" rx="7" ry="5" fill="#4A2820" transform="rotate(-5 16 51)" />
+                    
+                    <!-- Sharp teeth - upper jaw -->
+                    <polygon points="9,48 7,52 11,50" fill="#FFFEF0" />
+                    <polygon points="12,47 10,51 14,49" fill="#FFFEF0" />
+                    <polygon points="15,47 13,51 17,49" fill="#FFFEF0" />
+                    <polygon points="18,47 16,51 20,49" fill="#FFFEF0" />
+                    <polygon points="21,48 19,52 23,50" fill="#FFFEF0" />
+                    <polygon points="24,49 22,53 26,51" fill="#FFFEF0" />
+                    <polygon points="27,50 25,54 29,52" fill="#FFFEF0" />
+                    
+                    <!-- Sharp teeth - lower jaw -->
+                    <polygon points="10,54 8,52 12,53" fill="#FFFEF0" />
+                    <polygon points="13,55 11,53 15,54" fill="#FFFEF0" />
+                    <polygon points="16,55 14,53 18,54" fill="#FFFEF0" />
+                    <polygon points="19,55 17,53 21,54" fill="#FFFEF0" />
+                    <polygon points="22,54 20,52 24,53" fill="#FFFEF0" />
+                    <polygon points="25,53 23,51 27,52" fill="#FFFEF0" />
+                    
+                    <!-- Nostril with detail -->
+                    <ellipse cx="15" cy="45" rx="2" ry="2.5" fill="#2A1810" />
+                    <ellipse cx="15.5" cy="44.5" rx="0.8" ry="1" fill="#4A3830" />
+                    
+                    <!-- Fierce eye - golden and reptilian -->
+                    <ellipse cx="32" cy="42" rx="5.5" ry="6" fill="#1A0A00" />
+                    <ellipse cx="32.5" cy="41.5" rx="4" ry="4.5" fill="url(#eyeGrad)" />
+                    <ellipse cx="32.5" cy="41.5" rx="1.8" ry="3" fill="#0A0A00" />
+                    <circle cx="33" cy="40" r="1" fill="white" opacity="0.8" />
+                    <ellipse cx="32.5" cy="43" rx="1.5" ry="0.5" fill="#8B6F00" opacity="0.3" />
+                    
+                    <!-- Menacing eye ridge/brow -->
+                    <path d="M 26 38 Q 32 35 38 38" 
+                          stroke="#4A5A3A" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <path d="M 26 38 Q 32 36 38 38" 
+                          stroke="#5A6A4A" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                    
+                    <!-- Characteristic tiny T-Rex arms -->
+                    <!-- Left arm -->
+                    <ellipse cx="72" cy="92" rx="4.5" ry="11" fill="url(#bodyGrad)" transform="rotate(-40 72 92)" />
+                    <ellipse cx="72" cy="92" rx="3" ry="9" fill="#6B8E4E" transform="rotate(-40 72 92)" />
+                    <!-- Left hand with two claws -->
+                    <ellipse cx="68" cy="99" r="3" fill="#5A4A3A" />
+                    <line x1="68" y1="99" x2="66" y2="102" stroke="#3A2A1A" stroke-width="1.5" stroke-linecap="round" />
+                    <line x1="69" y1="99" x2="67" y2="103" stroke="#3A2A1A" stroke-width="1.5" stroke-linecap="round" />
+                    
+                    <!-- Right arm (partially visible behind) -->
+                    <ellipse cx="88" cy="88" rx="4" ry="10" fill="#5A7A3A" transform="rotate(-30 88 88)" opacity="0.5" />
+                    
+                    <!-- Body texture and scales -->
+                    <ellipse cx="92" cy="85" rx="4" ry="3" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="100" cy="88" rx="4" ry="3" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="108" cy="92" rx="4" ry="3" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="98" cy="96" rx="3.5" ry="2.5" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="106" cy="99" rx="3.5" ry="2.5" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="114" cy="96" rx="3" ry="2" fill="#5A7A3A" opacity="0.35" />
+                    <ellipse cx="120" cy="100" rx="3" ry="2" fill="#5A7A3A" opacity="0.35" />
+                    
+                    <!-- Additional muscle definition on legs -->
+                    <ellipse cx="87" cy="125" rx="5" ry="8" fill="#4A6A2A" opacity="0.2" transform="rotate(-5 87 125)" />
+                    <ellipse cx="127" cy="128" rx="5" ry="8" fill="#4A6A2A" opacity="0.2" transform="rotate(8 127 128)" />
+                </svg>
+            </div>
+            
+            <h1>Olgaaa, will you be my valentine?</h1>
+            
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="handleYes()">Yes</button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()">No</button>
+            </div>
+            
+            <div class="note">"No" seems a bit shy 💝</div>
+        </div>
+
+        <div class="result" id="result">
+            <div class="celebration">YAY! 🎉</div>
+            <div class="celebration-gif">
+                <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                    <source src="https://media.giphy.com/media/VbKLOdvCxBFNZpYvhL/giphy.mp4" type="video/mp4">
+                </video>
+            </div>
+            <h1 style="margin-top: 20px;">Best decision ever! 💕</h1>
+        </div>
+    </div>
+
+    <script>
+        let noButtonMoves = 0;
+        const noBtn = document.getElementById('noBtn');
+
+        function moveNoButton() {
+            noButtonMoves++;
+            
+            // Add moving class to switch to absolute positioning
+            noBtn.classList.add('moving');
+            
+            const card = document.querySelector('.card');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate safe boundaries
+            const maxX = cardRect.width - btnRect.width - 40;
+            const maxY = 200;
+            
+            // Random position within the card
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Make the button smaller each time
+            const newScale = Math.max(0.6, 1 - (noButtonMoves * 0.1));
+            noBtn.style.transform = `scale(${newScale})`;
+            
+            // Change text after a few attempts
+            if (noButtonMoves === 3) {
+                noBtn.textContent = "Maybe?";
+            } else if (noButtonMoves === 5) {
+                noBtn.textContent = "Yes? 👀";
+            } else if (noButtonMoves === 7) {
+                noBtn.textContent = "Fine, Yes!";
+                noBtn.onclick = handleYes;
+            }
+        }
+
+        function handleYes() {
+            // Hide question content
+            document.querySelector('.question-content').style.display = 'none';
+            
+            // Show result
+            const result = document.getElementById('result');
+            result.classList.add('show');
+            
+            // Create confetti
+            createConfetti();
+            
+            // Create floating hearts
+            createFloatingHearts();
+            
+            // Change background
+            document.body.style.background = 'linear-gradient(135deg, #ff9eb8 0%, #ff6b9d 100%)';
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#ff1744', '#ffd6e8', '#ffb3d9', '#ff9eb8', '#ffc0cb'];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -10 + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animationDelay = '0s';
+                    
+                    // Random shapes
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        function createFloatingHearts() {
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '💘'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'hearts-float';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 200);
+            }
+        }
+    </script>
+</body>
+</html>
